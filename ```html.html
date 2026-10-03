@@ -1,0 +1,314 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D-MARKET | Minimarket</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <div>
+            <h1>D-MARKET</h1>
+            <span>Gestión de Minimarket</span>
+        </div>
+
+        <div class="header-user">
+            Administrador
+        </div>
+    </header>
+
+    <div class="container">
+
+        <aside class="sidebar">
+
+            <button class="menu active" onclick="mostrarSeccion('inicio')">
+                🏠 Inicio
+            </button>
+
+            <button class="menu" onclick="mostrarSeccion('productos')">
+                📦 Productos
+            </button>
+
+            <button class="menu" onclick="mostrarSeccion('ventas')">
+                🛒 Ventas
+            </button>
+
+            <button class="menu" onclick="mostrarSeccion('stock')">
+                📊 Stock
+            </button>
+
+        </aside>
+
+        <main class="main">
+
+            <!-- INICIO -->
+            <section id="inicio" class="seccion">
+
+                <h2>Dashboard</h2>
+
+                <div class="cards">
+
+                    <div class="card">
+                        <div class="card-icon">📦</div>
+                        <div>
+                            <p>Productos</p>
+                            <h3 id="totalProductos">0</h3>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🛒</div>
+                        <div>
+                            <p>Ventas</p>
+                            <h3 id="totalVentas">0</h3>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">💰</div>
+                        <div>
+                            <p>Ingresos</p>
+                            <h3>S/ <span id="totalIngresos">0.00</span></h3>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">⚠️</div>
+                        <div>
+                            <p>Stock bajo</p>
+                            <h3 id="stockBajo">0</h3>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="panel">
+
+                    <h3>Bienvenido a D-MARKET</h3>
+
+                    <p>
+                        Sistema web para la gestión de productos,
+                        inventario y ventas de un minimarket.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- PRODUCTOS -->
+            <section id="productos" class="seccion oculto">
+
+                <div class="titulo-seccion">
+                    <h2>Productos</h2>
+
+                    <button class="btn-primary" onclick="abrirFormulario()">
+                        + Nuevo producto
+                    </button>
+                </div>
+
+                <div id="formularioProducto" class="panel oculto">
+
+                    <h3>Registrar producto</h3>
+
+                    <div class="form-grid">
+
+                        <div>
+                            <label>Producto</label>
+                            <input type="text" id="nombreProducto"
+                                   placeholder="Ej. Arroz Costeño">
+                        </div>
+
+                        <div>
+                            <label>Categoría</label>
+                            <select id="categoriaProducto">
+                                <option value="Abarrotes">Abarrotes</option>
+                                <option value="Bebidas">Bebidas</option>
+                                <option value="Lácteos">Lácteos</option>
+                                <option value="Limpieza">Limpieza</option>
+                                <option value="Snacks">Snacks</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label>Precio</label>
+                            <input type="number" id="precioProducto"
+                                   step="0.01" placeholder="0.00">
+                        </div>
+
+                        <div>
+                            <label>Stock</label>
+                            <input type="number" id="stockProducto"
+                                   placeholder="0">
+                        </div>
+
+                    </div>
+
+                    <div class="form-buttons">
+
+                        <button class="btn-primary"
+                                onclick="guardarProducto()">
+                            Guardar
+                        </button>
+
+                        <button class="btn-secondary"
+                                onclick="cerrarFormulario()">
+                            Cancelar
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Producto</th>
+                                <th>Categoría</th>
+                                <th>Precio</th>
+                                <th>Stock</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tablaProductos"></tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- VENTAS -->
+            <section id="ventas" class="seccion oculto">
+
+                <h2>Registrar venta</h2>
+
+                <div class="venta-container">
+
+                    <div class="panel">
+
+                        <h3>Seleccionar producto</h3>
+
+                        <select id="productoVenta"></select>
+
+                        <input type="number"
+                               id="cantidadVenta"
+                               value="1"
+                               min="1">
+
+                        <button class="btn-primary"
+                                onclick="agregarVenta()">
+                            Agregar
+                        </button>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <h3>Detalle de venta</h3>
+
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="detalleVenta"></tbody>
+
+                        </table>
+
+                        <div class="total-venta">
+
+                            <strong>
+                                TOTAL: S/ <span id="totalVenta">0.00</span>
+                            </strong>
+
+                        </div>
+
+                        <div class="pago">
+
+                            <label>Pago recibido</label>
+
+                            <input type="number"
+                                   id="pagoCliente"
+                                   step="0.01"
+                                   oninput="calcularVuelto()">
+
+                            <p>
+                                Vuelto:
+                                <strong>
+                                    S/ <span id="vuelto">0.00</span>
+                                </strong>
+                            </p>
+
+                            <button class="btn-success"
+                                    onclick="finalizarVenta()">
+                                Finalizar venta
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- STOCK -->
+            <section id="stock" class="seccion oculto">
+
+                <h2>Control de Stock</h2>
+
+                <div class="panel">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Producto</th>
+                                <th>Categoría</th>
+                                <th>Stock</th>
+                                <th>Estado</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="tablaStock"></tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
+```
