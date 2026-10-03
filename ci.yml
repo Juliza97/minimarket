@@ -1,0 +1,21 @@
+name: Mi primer CI
+
+on:
+  push:
+    branches:
+     - main
+
+jobs:
+  verificar:
+    roun-on: ubuntu-latest
+
+  steps:
+   - name: Descargar código
+     uses: actions/checkout@v4
+
+
+   - name: verificar index.html
+     run: test -f index.html
+
+     Commit changes
+     
